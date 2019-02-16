@@ -21,6 +21,5 @@ public class MsgAddUser extends MsgToDB {
         user.setName(name);
         dbService.save(user);
         dbService.getMS().sendMessage(new MsgUserToFrontend(getFrom(), getTo(), name));
-        System.out.println("hello");
     }
 }
