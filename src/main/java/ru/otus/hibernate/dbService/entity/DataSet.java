@@ -1,4 +1,4 @@
-package ru.otus.hibernate.entity;
+package ru.otus.hibernate.dbService.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;

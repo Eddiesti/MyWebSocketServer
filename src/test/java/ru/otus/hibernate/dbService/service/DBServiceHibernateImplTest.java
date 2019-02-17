@@ -1,4 +1,4 @@
-package ru.otus.hibernate.service;
+package ru.otus.hibernate.dbService.service;
 
 
 public class DBServiceHibernateImplTest {

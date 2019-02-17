@@ -1,6 +1,6 @@
 package ru.otus.hibernate.app.messages;
 
-import ru.otus.hibernate.app.FrontendService;
+import ru.otus.hibernate.front.FrontendService;
 import ru.otus.hibernate.app.MsgToFrontend;
 import ru.otus.hibernate.messageSystem.Address;
 

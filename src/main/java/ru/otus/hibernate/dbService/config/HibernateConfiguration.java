@@ -1,11 +1,12 @@
-package ru.otus.hibernate.config;
+package ru.otus.hibernate.dbService.config;
 
-import ru.otus.hibernate.entity.DataSet;
-import ru.otus.hibernate.entity.UserDataSet;
+import org.hibernate.cfg.Configuration;
+import ru.otus.hibernate.dbService.entity.DataSet;
+import ru.otus.hibernate.dbService.entity.UserDataSet;
 
 public class HibernateConfiguration {
     public static org.hibernate.cfg.Configuration setup() {
-        org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration();
+        Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(UserDataSet.class);
         configuration.addAnnotatedClass(DataSet.class);
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
@@ -14,9 +15,10 @@ public class HibernateConfiguration {
         configuration.setProperty("hibernate.connection.username", "root");
         configuration.setProperty("hibernate.connection.password", "root");
         configuration.setProperty("hibernate.show_sql", "true");
+        configuration.setProperty("hibernate.connection.useSSL", "false");
         configuration.setProperty("hibernate.hbm2ddl.auto", "update");
         configuration.setProperty("hibernate.enable_lazy_load_no_trans", "true");
-        configuration.setProperty("hibernate.connection.characterEncoding","utf8");
+        configuration.setProperty("hibernate.connection.characterEncoding", "utf8");
         return configuration;
     }
 }

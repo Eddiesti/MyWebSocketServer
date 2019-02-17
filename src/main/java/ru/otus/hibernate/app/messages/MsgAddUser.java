@@ -1,9 +1,9 @@
 package ru.otus.hibernate.app.messages;
 
-import ru.otus.hibernate.app.DBService;
+import com.google.gson.Gson;
+import ru.otus.hibernate.dbService.service.DBService;
 import ru.otus.hibernate.app.MsgToDB;
-import ru.otus.hibernate.entity.DataSet;
-import ru.otus.hibernate.entity.UserDataSet;
+import ru.otus.hibernate.dbService.entity.UserDataSet;
 import ru.otus.hibernate.messageSystem.Address;
 
 public class MsgAddUser extends MsgToDB {
@@ -17,10 +17,9 @@ public class MsgAddUser extends MsgToDB {
 
     @Override
     public void exec(DBService dbService) {
-        UserDataSet user = new UserDataSet();
-        user.setName(name);
+        Gson gson = new Gson();
+        UserDataSet user = gson.fromJson(name,UserDataSet.class);
         dbService.save(user);
-        dbService.getMS().sendMessage(new MsgUserToFrontend(getFrom(), getTo(), name));
-        System.out.println("hello");
+        dbService.getMS().sendMessage(new MsgUserToFrontend(getTo(), getFrom(), user.toString()));
     }
 }

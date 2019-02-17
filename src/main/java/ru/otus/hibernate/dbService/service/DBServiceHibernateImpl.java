@@ -1,31 +1,30 @@
-package ru.otus.hibernate.service;
+package ru.otus.hibernate.dbService.service;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
-import ru.otus.hibernate.app.DBService;
-import ru.otus.hibernate.config.HibernateConfiguration;
-import ru.otus.hibernate.dao.UsersDAO;
-import ru.otus.hibernate.entity.DataSet;
+import ru.otus.hibernate.dbService.config.HibernateConfiguration;
+import ru.otus.hibernate.dbService.dao.UsersDAO;
+import ru.otus.hibernate.dbService.entity.DataSet;
+import ru.otus.hibernate.dbService.entity.UserDataSet;
 import ru.otus.hibernate.messageSystem.Address;
 import ru.otus.hibernate.messageSystem.MessageSystem;
 import ru.otus.hibernate.app.MessageSystemContext;
 
+import java.util.List;
+
 public class DBServiceHibernateImpl implements DBService {
     private final SessionFactory sessionFactory;
-    private final Address address;
-    private final MessageSystemContext context;
+    private MessageSystemContext context;
+    private Address address;
 
-    public MessageSystemContext getContext() {
-        return context;
-    }
-
-    public DBServiceHibernateImpl(Address address, MessageSystemContext context) {
-        this.sessionFactory = createSessionFactory(HibernateConfiguration.setup());
+    public DBServiceHibernateImpl(Address address, MessageSystemContext messageSystemContext) {
+        sessionFactory = createSessionFactory(HibernateConfiguration.setup());
+        this.context = messageSystemContext;
         this.address = address;
-        this.context = context;
+
     }
 
     private static SessionFactory createSessionFactory(Configuration configuration) {
@@ -51,14 +50,14 @@ public class DBServiceHibernateImpl implements DBService {
         }
     }
 
-//    @Override
-//    public <T extends DataSet> String getUserById(long id, Class<T> clazz) {
-//        try (Session session = sessionFactory.openSession()) {
-//            UsersDAO dao = new UsersDAO(session);
-//            String userById = dao.getUserById(id, clazz);
-//            return userById;
-//        }
-//    }
+    @Override
+    public <T extends DataSet> String getUserById(long id, Class<T> clazz) {
+        try (Session session = sessionFactory.openSession()) {
+            UsersDAO dao = new UsersDAO(session);
+            String userById = dao.getUserById(id, clazz);
+            return userById;
+        }
+    }
 
     @Override
     public Integer getCountUsers() {
@@ -71,7 +70,7 @@ public class DBServiceHibernateImpl implements DBService {
 
     @Override
     public Address getAddress() {
-        return null;
+        return address;
     }
 
     @Override
@@ -86,14 +85,14 @@ public class DBServiceHibernateImpl implements DBService {
     @Override
     public void init() {
         context.getMessageSystem().addAddressee(this);
+        context.setDbAddress(this.getAddress());
     }
 
-    @Override
-    public String getUserById(long id, Class clazz) {
+
+    public List<UserDataSet> readAll() {
         try (Session session = sessionFactory.openSession()) {
             UsersDAO dao = new UsersDAO(session);
-            String userById = dao.getUserById(id, clazz);
-            return userById;
+            return dao.readAll();
         }
     }
 }

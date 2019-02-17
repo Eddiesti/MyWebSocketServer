@@ -5,13 +5,9 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
-import ru.otus.hibernate.app.FrontendService;
-import ru.otus.hibernate.entity.UserDataSet;
-import ru.otus.hibernate.front.FrontendServiceImpl;
+import ru.otus.hibernate.front.FrontendService;
 
 import java.io.IOException;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @WebSocket
 public class UserWebSocket {
@@ -40,10 +36,11 @@ public class UserWebSocket {
     @OnWebSocketMessage
     public void onMessage(String name) throws IOException {
         frontendService.sendAddUser(name);
+        frontendService.sendGetUsersList();
     }
 
     @OnWebSocketClose
-    public void onClose() {
+    public void onClose(int statusCode, String reason) {
         frontendService.removeClient(id);
     }
 }

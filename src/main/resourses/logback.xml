@@ -21,7 +21,7 @@
     </appender>
 
 
-    <logger name="ru.otus.hibernate.dao.UsersDAO" level="info" additivity="true">
+    <logger name="ru.otus.hibernate.dbService.dao.UsersDAO" level="info" additivity="true">
         <appender-ref ref="APP_LOG" />
     </logger>
     <logger name="ru.otus.hibernate.servlets.AddUserServlet" level="error" additivity="true">

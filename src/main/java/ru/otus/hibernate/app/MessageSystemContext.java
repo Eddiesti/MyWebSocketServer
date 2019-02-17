@@ -8,7 +8,6 @@ public class MessageSystemContext {
 
     private Address frontAddress;
     private Address dbAddress;
-    private Address cacheAddress;
 
     public MessageSystemContext(MessageSystem messageSystem) {
         this.messageSystem = messageSystem;
@@ -32,13 +31,5 @@ public class MessageSystemContext {
 
     public void setDbAddress(Address dbAddress) {
         this.dbAddress = dbAddress;
-    }
-
-    public Address getCacheAddress() {
-        return cacheAddress;
-    }
-
-    public void setCacheAddress(Address cacheAddress) {
-        this.cacheAddress = cacheAddress;
     }
 }
