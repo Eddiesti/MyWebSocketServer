@@ -34,9 +34,8 @@ public class UserWebSocket {
     }
 
     @OnWebSocketMessage
-    public void onMessage(String name) throws IOException {
-        frontendService.sendAddUser(name);
-        frontendService.notifyAllUsers(name);
+    public void onMessage(String user) throws IOException {
+        frontendService.sendAddUser(user);
     }
 
     @OnWebSocketClose

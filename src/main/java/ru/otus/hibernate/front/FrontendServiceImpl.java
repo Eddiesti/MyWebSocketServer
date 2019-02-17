@@ -3,7 +3,6 @@ package ru.otus.hibernate.front;
 
 import ru.otus.hibernate.app.MessageSystemContext;
 import ru.otus.hibernate.app.messages.MsgAddUser;
-import ru.otus.hibernate.app.messages.MsgLoadUser;
 import ru.otus.hibernate.messageSystem.*;
 import ru.otus.hibernate.websocket.UserWebSocket;
 
@@ -24,14 +23,15 @@ public class FrontendServiceImpl implements FrontendService {
     }
 
     @Override
-    public void sendAddUser(String data) {
-        context.getMessageSystem().sendMessage(new MsgAddUser(this.getAddress(), context.getDbAddress(), data));
+    public void sendAddUser(String user) {
+        context.getMessageSystem().sendMessage(new MsgAddUser(this.getAddress(), context.getDbAddress(),user));
+
     }
 
-    public void notifyAllUsers(String data) {
+    public void notifyAllUsers(String user) {
         for (UserWebSocket item : map.values()) {
             try {
-                item.getSession().getRemote().sendString(data);
+                item.getSession().getRemote().sendString(user);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -42,10 +42,6 @@ public class FrontendServiceImpl implements FrontendService {
         String id = UUID.randomUUID().toString();
         this.map.put(id, webSocket);
         return id;
-    }
-    @Override
-    public void sendGetUsersList() {
-        context.getMessageSystem().sendMessage(new MsgLoadUser(this.getAddress(),context.getDbAddress()));
     }
 
     public void removeClient(String id) {

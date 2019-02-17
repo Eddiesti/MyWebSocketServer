@@ -7,15 +7,15 @@ import ru.otus.hibernate.messageSystem.Address;
 import java.io.IOException;
 
 public class MsgUsersToFrontend extends MsgToFrontend {
-    private final String name;
+    private final String user;
 
-    public MsgUsersToFrontend(Address from, Address to, String name) {
+    public MsgUsersToFrontend(Address from, Address to, String user) {
         super(from, to);
-        this.name = name;
+        this.user = user;
     }
 
     @Override
     public void exec(FrontendService front) throws IOException {
-        front.notifyAllUsers(name);
+        front.notifyAllUsers(user);
     }
 }

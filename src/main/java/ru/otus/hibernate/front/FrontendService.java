@@ -18,5 +18,5 @@ public interface FrontendService extends Addressee {
 
     String addClient(UserWebSocket webSocket);
 
-    void sendGetUsersList();
+    //void sendGetUsersList();
 }

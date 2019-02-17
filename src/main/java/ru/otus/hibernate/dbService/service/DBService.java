@@ -19,5 +19,5 @@ public interface DBService extends Addressee {
 
     void init();
 
-    List<UserDataSet> readAll();
+    List<UserDataSet> readAllUsers();
 }

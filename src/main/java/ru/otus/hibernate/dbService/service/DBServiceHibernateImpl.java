@@ -89,7 +89,7 @@ public class DBServiceHibernateImpl implements DBService {
     }
 
 
-    public List<UserDataSet> readAll() {
+    public List<UserDataSet> readAllUsers() {
         try (Session session = sessionFactory.openSession()) {
             UsersDAO dao = new UsersDAO(session);
             return dao.readAll();
