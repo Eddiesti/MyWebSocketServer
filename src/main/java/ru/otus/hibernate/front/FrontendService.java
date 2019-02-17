@@ -7,7 +7,6 @@ import ru.otus.hibernate.websocket.UserWebSocket;
 import java.io.IOException;
 
 public interface FrontendService extends Addressee {
-    void init();
 
     void sendAddUser(String user) throws IOException;
 
@@ -15,9 +14,9 @@ public interface FrontendService extends Addressee {
 
     MessageSystem getMS();
 
-    void removeClient(Integer id);
+    void removeClient(String id);
 
-    Integer addClient(UserWebSocket webSocket);
+    String addClient(UserWebSocket webSocket);
 
     void sendGetUsersList();
 }

@@ -17,6 +17,6 @@ public class MsgLoadUser extends MsgToDB {
     public void exec(DBService dbService) {
         Gson gson = new Gson();
         List<UserDataSet> userDataSets = dbService.readAll();
-        dbService.getMS().sendMessage(new MsgUserToFrontend(getTo(), getFrom(), gson.toJson(userDataSets)));
+        dbService.getMS().sendMessage(new MsgUsersToFrontend(getTo(), getFrom(), gson.toJson(userDataSets)));
     }
 }

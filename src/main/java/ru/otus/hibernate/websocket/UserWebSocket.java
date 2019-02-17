@@ -13,7 +13,7 @@ import java.io.IOException;
 public class UserWebSocket {
     private Session session;
     private FrontendService frontendService;
-    private Integer id;
+    private String id;
 
     public UserWebSocket(FrontendService frontendService) {
         this.frontendService = frontendService;
@@ -36,7 +36,7 @@ public class UserWebSocket {
     @OnWebSocketMessage
     public void onMessage(String name) throws IOException {
         frontendService.sendAddUser(name);
-        frontendService.sendGetUsersList();
+        frontendService.notifyAllUsers(name);
     }
 
     @OnWebSocketClose

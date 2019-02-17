@@ -9,23 +9,18 @@ import ru.otus.hibernate.websocket.UserWebSocket;
 
 import java.io.IOException;
 
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class FrontendServiceImpl implements FrontendService {
     private Address address;
-    private ConcurrentHashMap<Integer, UserWebSocket> map;
+    private ConcurrentHashMap<String, UserWebSocket> map;
     private MessageSystemContext context;
 
     public FrontendServiceImpl(Address address, MessageSystemContext context) {
         this.address = address;
         this.map = new ConcurrentHashMap<>();
         this.context = context;
-    }
-
-    @Override
-    public void init() {
-        context.getMessageSystem().addAddressee(this);
-        context.setFrontAddress(this.address);
     }
 
     @Override
@@ -43,8 +38,8 @@ public class FrontendServiceImpl implements FrontendService {
         }
     }
 
-    public Integer addClient(UserWebSocket webSocket) {
-        Integer id = random();
+    public String addClient(UserWebSocket webSocket) {
+        String id = UUID.randomUUID().toString();
         this.map.put(id, webSocket);
         return id;
     }
@@ -53,7 +48,7 @@ public class FrontendServiceImpl implements FrontendService {
         context.getMessageSystem().sendMessage(new MsgLoadUser(this.getAddress(),context.getDbAddress()));
     }
 
-    public void removeClient(Integer id) {
+    public void removeClient(String id) {
         this.map.remove(id);
     }
 
@@ -67,9 +62,4 @@ public class FrontendServiceImpl implements FrontendService {
         return context.getMessageSystem();
     }
 
-    private int random() {
-        final int MIN = 1;
-        final int MAX = 100;
-        return MIN + (int) (Math.random() * MAX);
-    }
 }

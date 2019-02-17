@@ -18,8 +18,11 @@ public class MsgAddUser extends MsgToDB {
     @Override
     public void exec(DBService dbService) {
         Gson gson = new Gson();
-        UserDataSet user = gson.fromJson(name,UserDataSet.class);
+        UserDataSet user = gson.fromJson(name, UserDataSet.class);
         dbService.save(user);
-        dbService.getMS().sendMessage(new MsgUserToFrontend(getTo(), getFrom(), user.toString()));
+
+        dbService.getMS().sendMessage(new MsgUsersToFrontend(getTo(), getFrom(), user.toString()));
+        dbService.getMS().sendMessage(new MsgUsersToFrontend(getFrom(), getTo(), name));
+
     }
 }
